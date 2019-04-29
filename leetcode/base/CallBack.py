@@ -32,7 +32,7 @@ class CallBack(object):
 
     def outputVerify(self, inputObjArr, trueResultList, outputObj, dataList, tempList):
 
-        resultFlag = False;
+        resultFlag = False
 
         testResult = formatObj(outputObj)
 

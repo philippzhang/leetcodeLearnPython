@@ -1,7 +1,7 @@
 import sys, types
 import time
 
-from leetcode.base import StringUtil
+from leetcode.base.StringUtil import judgeINumber
 
 
 class Utilitys(object):
@@ -221,9 +221,9 @@ class Utilitys(object):
             if len(trueResult) > 0:
                 if trueResult.startswith("="):
                     trueResult = trueResult[1:]
-                    if trueResult.startswith("="):
+                    if len(trueResult):
                         trueResultOutputList.append(trueResult)
-                elif StringUtil.judgeINumber(trueResult):
+                elif judgeINumber(trueResult):
 
                     # 验证输入参数
 

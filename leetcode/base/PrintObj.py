@@ -8,7 +8,7 @@ def printObjCore(obj, ext):
         print("null")
         return
     t = type(obj)
-    if t == int:
+    if t == int or t == float or t == bool:
         print(obj)
     elif t == str:
         print(obj)
