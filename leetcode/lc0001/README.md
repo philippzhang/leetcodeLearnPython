@@ -38,7 +38,7 @@ return [0, 1].
 ```
 1. Two Sum 两数之和 Easy
 Solution.twoSum  #非数组实现
-Solution.twoSum2 #数组实现 time:O(N)
+#Solution.twoSum2 #数组实现 time:O(N)
 ---
 [2,7,11,15]
 9

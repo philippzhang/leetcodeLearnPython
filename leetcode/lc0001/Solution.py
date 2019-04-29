@@ -1,4 +1,8 @@
+from leetcode.base.Typeassert import typeassert
+
+
 class Solution(object):
+    @typeassert(object, list, int,rtype=list)
     def twoSum(self, nums, target):
         """
         :type nums: List[int]
