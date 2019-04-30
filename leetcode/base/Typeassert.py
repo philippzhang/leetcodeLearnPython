@@ -10,13 +10,16 @@ def typeassert(*type_args, rtype=None, **type_kwargs):
         func.rtype = rtype
 
         @wraps(func)
-        def wrapper(*args, rtype=None, **kwargs):
+        def wrapper(*args,  **kwargs):
             bound_values = sig.bind(*args, **kwargs)
             for name, value in bound_values.arguments.items():
                 if name in bound_types:
                     if not isinstance(value, bound_types[name]):
                         raise TypeError('Argument {} must be {}'.format(name, bound_types[name]))
-            return func(*args, **kwargs)
+            v = func(*args, **kwargs)
+            if not isinstance(v, rtype):
+                raise TypeError('return {} must be {}'.format(v, rtype))
+            return v
 
         return wrapper
 
