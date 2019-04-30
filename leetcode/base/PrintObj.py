@@ -1,9 +1,11 @@
+from leetcode.base.structure.ListNode import ListNode
+
 
 def printObj(obj):
-    printObjCore(obj, None)
+    _printObjCore(obj, None)
 
 
-def printObjCore(obj, ext):
+def _printObjCore(obj, ext):
     if obj is None:
         print("null")
         return
@@ -33,10 +35,22 @@ def printObjCore(obj, ext):
                 if i == 0:
                     print()
                 if i < len(obj) - 1:
-                    printObjCore(item, ",")
+                    _printObjCore(item, ",")
                 else:
-                    printObjCore(item, None)
+                    _printObjCore(item, None)
         print("]", end='')
         if ext is not None:
             print(ext, end='')
         print()
+    elif t == ListNode:
+        print("[", end='')
+        print(obj.val, end='')
+        p = obj.next
+        while p:
+            print(",", end='')
+            print(p.val, end='')
+            p = p.next
+        print("]", end='')
+        if ext is not None:
+            print(ext, end='')
+        print("")

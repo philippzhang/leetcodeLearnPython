@@ -1,4 +1,5 @@
 from leetcode.base.StringUtil import chageStr
+from leetcode.base.structure.ListNode import ListNode
 
 
 def formatObj(obj):
@@ -37,4 +38,14 @@ def formatObjCore(obj, dataBuffer):
             elif tt == list:
                 formatObjCore(item, dataBuffer)
 
+        dataBuffer.append("]")
+
+    elif t == ListNode:
+        dataBuffer.append("[")
+        dataBuffer.append(obj.val)
+        p = obj.next
+        while p:
+            dataBuffer.append(",")
+            dataBuffer.append(p.val)
+            p = p.next
         dataBuffer.append("]")

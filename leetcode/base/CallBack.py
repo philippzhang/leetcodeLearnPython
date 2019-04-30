@@ -1,7 +1,8 @@
-from leetcode.base.Build import buildList
+from leetcode.base.Build import buildList, buildListNode
 from leetcode.base.Format import formatObj
 from leetcode.base.PrintObj import printObj
 from leetcode.base.Typeassert import typeassert
+from leetcode.base.structure.ListNode import ListNode
 
 
 class CallBack(object):
@@ -24,6 +25,8 @@ class CallBack(object):
                     inputObjArr.append(buildList(data))
                 elif item_type == int:
                     inputObjArr.append(int(data))
+                elif item_type == ListNode:
+                    inputObjArr.append(buildListNode(data))
                 i += 1
 
     def printOutput(self, outputObj):
@@ -39,20 +42,20 @@ class CallBack(object):
         for i in range(len(trueResultList)):
             trueResult = trueResultList[i]
             if trueResult == "null" and outputObj is None:
-                self.printOutVerify(self, trueResultList, None, True)
+                self.printOutVerify(trueResultList, None, True)
                 return True
             try:
                 resultFlag = trueResult == testResult
                 if resultFlag:
-                    self.printOutVerify(self, trueResultList, testResult, resultFlag)
+                    self.printOutVerify(trueResultList, testResult, resultFlag)
                     return True
             except Exception as e:
                 print('outputVerify(Exception):\t', str(e))
-                self.printOutVerify(self, trueResultList, str(e), False)
+                self.printOutVerify(trueResultList, str(e), False)
                 return False
 
-        self.printOutVerify(self, trueResultList, testResult, resultFlag)
-        return resultFlag;
+        self.printOutVerify(trueResultList, testResult, resultFlag)
+        return resultFlag
 
     def printOutVerify(self, trueResultList, testResult, resultFlag):
         print("输出结果:")
@@ -72,11 +75,11 @@ class CallBack(object):
             inputObj = inputObjArr[inputIndex]
             testInputResult = formatObj(inputObj);
             resultFlag = trueInputResult == testInputResult
-            self.printInputVerify(self, trueInputResult, testInputResult, resultFlag)
+            self.printInputVerify(trueInputResult, testInputResult, resultFlag)
             return resultFlag;
         except Exception as e:
             print('inputVerify(Exception):\t', str(e))
-            self.printInputVerify(self, trueInputResult, str(e), False)
+            self.printInputVerify(trueInputResult, str(e), False)
             return False
 
     def printInputVerify(self, trueInputResult, testInputResult, resultFlag):

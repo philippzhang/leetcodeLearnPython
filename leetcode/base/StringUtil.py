@@ -12,6 +12,6 @@ def chageStr(temp):
     if temp.startswith("\""):
         temp = temp[1:]
     if temp.endswith("\""):
-        temp = temp[0:-2]
+        temp = temp[0:-1]
 
     return temp
