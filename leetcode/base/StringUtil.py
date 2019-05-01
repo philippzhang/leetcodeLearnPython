@@ -1,12 +1,17 @@
+import re
+
+
 def judgeNumber(temp):
-    return temp.match("-?[0-9]+.*[0-9]*")
+    value = re.compile(r'^[-+]?[0-9]+\.*[0-9]*$')
+    return value.match(temp)
 
 
 def judgeINumber(temp):
-    return temp.match("^I[0-9]=.+$")
+    value = re.compile(r'^I[0-9]=.+$')
+    return value.match(temp)
 
 
-def chageStr(temp):
+def changeStr(temp):
     if temp is None or len(temp) == 0 or temp == "null":
         return "null"
     if temp.startswith("\""):

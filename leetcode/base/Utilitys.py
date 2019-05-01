@@ -142,7 +142,7 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
                         testFlag = False
                         obj.printInputVerify(trueInputResult, str(e), False)
 
-    if len(trueResultOutputList) > 0:
+    if testFlag and len(trueResultOutputList) > 0:
         # 验证输出结果
         try:
             resultFlag = obj.outputVerify(inputObjArr, trueResultOutputList, outputObj, dataList, tempList)
@@ -174,6 +174,10 @@ def funcInvoke(className, path):
     al = getObject(className)
     flag = test(al, path)
     return flag
+
+
+def funcListTest(path, funcList, paramList):
+    pass
 
 
 def _get_mod(modulePath):

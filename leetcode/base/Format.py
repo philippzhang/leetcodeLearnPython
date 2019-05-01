@@ -1,4 +1,4 @@
-from leetcode.base.StringUtil import chageStr
+from leetcode.base.StringUtil import changeStr
 from leetcode.base.structure.ListNode import ListNode
 
 
@@ -17,7 +17,7 @@ def formatObjCore(obj, dataBuffer):
     if t == int or t == float or t == bool:
         dataBuffer.append(obj)
     elif t == str:
-        dataBuffer.append(chageStr(obj))
+        dataBuffer.append(changeStr(obj))
     elif t == list:
         dataBuffer.append("[")
         for i in range(len(obj)):
