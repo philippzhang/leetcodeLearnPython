@@ -60,7 +60,7 @@ def formatObjCore(obj, dataBuffer):
             dataBuffer.append("null")
             return
         dataBuffer.append("[")
-        dataBuffer.append(_levelOrderFormat(t))
+        dataBuffer.append(_levelOrderFormat(obj))
         dataBuffer.append("]")
 
 
@@ -78,11 +78,11 @@ def _levelOrderFormat(root):
                 if current.left is not None:
                     q.put(current.left)
                 else:
-                    q.empty(None)
+                    q.put(None)
                 if current.right is not None:
                     q.put(current.right)
                 else:
-                    q.empty(None)
+                    q.put(None)
             else:
                 s.push(None)
         while not s.isEmpty():
@@ -93,9 +93,10 @@ def _levelOrderFormat(root):
         while not s.isEmpty():
             treeNode = s.pop()
 
-            item = (treeNode.val + ",") if treeNode is not None else "null,"
+            item = (str(treeNode.val) + ",") if treeNode is not None else "null,"
             stringBuffer.insert(0, item)
-        if len(stringBuffer) > 0:
-            del stringBuffer[len(stringBuffer) - 1]
 
-    return "".join([str(x) for x in stringBuffer])
+    s = "".join([str(x) for x in stringBuffer])
+    if len(s) > 0:
+        s = s[0:-1]
+    return s

@@ -1,4 +1,5 @@
 from leetcode.base.structure.ListNode import ListNode
+from leetcode.base.structure.TreeNode import TreeNode
 
 
 def printObj(obj):
@@ -54,3 +55,9 @@ def _printObjCore(obj, ext):
         if ext is not None:
             print(ext, end='')
         print("")
+    elif t == TreeNode:
+        pass
+
+def _getDepth(root):
+    pass
+
