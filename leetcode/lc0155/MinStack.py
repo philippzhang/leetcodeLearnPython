@@ -20,7 +20,7 @@ class MinStack(object):
         self.tail.next = tmp
         self.tail = self.tail.next
 
-        if self.mintail.val == None or x < self.mintail.val:
+        if self.mintail.val is None or x < self.mintail.val:
             tmp = ListNode(x)
             tmp.before = self.mintail
             self.mintail.next = tmp

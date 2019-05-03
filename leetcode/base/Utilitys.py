@@ -177,6 +177,18 @@ def funcInvoke(className, path):
 
 
 def funcListTest(path, funcList, paramList):
+    packageName = path.split("/")[-1]
+    for i in range(len(funcList)):
+        funcName = funcList[i]
+        params = paramList[i]
+        if i == 0:
+            #第一个值是构造方法
+            className = "leetcode." + packageName + "."+funcName+"."+funcName
+            al = getObject(className)
+            pass
+        else:
+            pass
+
     pass
 
 

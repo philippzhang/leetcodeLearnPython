@@ -1,5 +1,9 @@
+from queue import Queue
+
+from leetcode.base.Stack import Stack
 from leetcode.base.StringUtil import changeStr
 from leetcode.base.structure.ListNode import ListNode
+from leetcode.base.structure.TreeNode import TreeNode
 
 
 def formatObj(obj):
@@ -37,6 +41,8 @@ def formatObjCore(obj, dataBuffer):
                     dataBuffer.append(',')
             elif tt == list:
                 formatObjCore(item, dataBuffer)
+                if i < len(obj) - 1:
+                    dataBuffer.append(',')
 
         dataBuffer.append("]")
 
@@ -49,3 +55,47 @@ def formatObjCore(obj, dataBuffer):
             dataBuffer.append(p.val)
             p = p.next
         dataBuffer.append("]")
+    elif t == TreeNode:
+        if t is None:
+            dataBuffer.append("null")
+            return
+        dataBuffer.append("[")
+        dataBuffer.append(_levelOrderFormat(t))
+        dataBuffer.append("]")
+
+
+def _levelOrderFormat(root):
+    current = root
+    stringBuffer = []
+    if current is not None:
+        q = Queue()
+        s = Stack()
+        q.put(current)
+        while not q.empty():
+            current = q.get()
+            if current is not None:
+                s.push(current)
+                if current.left is not None:
+                    q.put(current.left)
+                else:
+                    q.empty(None)
+                if current.right is not None:
+                    q.put(current.right)
+                else:
+                    q.empty(None)
+            else:
+                s.push(None)
+        while not s.isEmpty():
+            if s.peek() is None:
+                s.pop()
+            else:
+                break
+        while not s.isEmpty():
+            treeNode = s.pop()
+
+            item = (treeNode.val + ",") if treeNode is not None else "null,"
+            stringBuffer.insert(0, item)
+        if len(stringBuffer) > 0:
+            del stringBuffer[len(stringBuffer) - 1]
+
+    return "".join([str(x) for x in stringBuffer])

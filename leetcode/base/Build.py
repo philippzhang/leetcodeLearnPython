@@ -1,5 +1,8 @@
+from queue import Queue
+
 from leetcode.base.StringUtil import changeStr, judgeNumber
 from leetcode.base.structure.ListNode import ListNode
+from leetcode.base.structure.TreeNode import TreeNode
 
 
 def buildList(data):
@@ -53,6 +56,8 @@ def buildListNode(data):
     """
     if data is None or len(data) == 0 or data == "null" or data.find("[") < 0:
         return None
+    if data == '[]':
+        return None
     data = data[1:-1]
     arr = data.split(',')
     ret = []
@@ -74,4 +79,23 @@ def buildTreeNode(data):
     :param data:
     :return:
     """
-    pass
+    if data is None or len(data) == 0 or data == "null" or data.find("[") < 0:
+        return None
+    if data == '[]':
+        return None
+    data = data[1:-1]
+    arr = data.split(',')
+    root = TreeNode(arr[0])
+    q = Queue()
+    q.put(root)
+    i = 1
+    while not q.empty() and i < len(arr):
+        node = q.get()
+        if i < len(arr) and arr[i] is not None and arr[i] != 'null':
+            node.left = TreeNode(int(arr[i]))
+            q.put(node.left)
+        if i+1 < len(arr) and arr[i+1] is not None and arr[i+1] != 'null':
+            node.right = TreeNode(int(arr[i+1]))
+            q.put(node.right)
+        i += 2
+    return root
