@@ -41,6 +41,8 @@ class CallBack(object):
                     inputObjArr.append(buildList(data))
                 elif item_type == int:
                     inputObjArr.append(int(data))
+                elif item_type == str:
+                    inputObjArr.append(data)
                 elif item_type == ListNode:
                     inputObjArr.append(buildListNode(data))
                 elif item_type == TreeNode:
