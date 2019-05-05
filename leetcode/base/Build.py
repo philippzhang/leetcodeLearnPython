@@ -18,9 +18,9 @@ def buildList(data):
         return []
     data = data.strip()
     data = data[1:-1]
+    dataBuffer = []
     if data.find('[') >= 0:
         arr = []
-        dataBuffer = []
         count = 0
         for i in range(len(data)):
             c = data[i]
@@ -30,12 +30,15 @@ def buildList(data):
             elif c == ']':
                 count -= 1
             elif c == ',' or count == 0:
-                del dataBuffer[len(dataBuffer) - 1]
-                arr.append("".join([str(x) for x in dataBuffer]))
+                d = "".join([str(x) for x in dataBuffer])
+                d = d[0:-1]
+                arr.append(d)
                 dataBuffer = []
     else:
         arr = data.split(',')
-
+    if len(dataBuffer) > 0:
+        d = "".join([str(x) for x in dataBuffer])
+        arr.append(d)
     ret = []
     for i in range(len(arr)):
         d = arr[i].strip()

@@ -1,3 +1,4 @@
+
 from leetcode.base.Build import buildList, buildListNode, buildTreeNode
 from leetcode.base.Format import formatObj
 from leetcode.base.PrintObj import printObj
@@ -5,8 +6,6 @@ from leetcode.base.Typeassert import typeassert
 from leetcode.base.Utilitys import funcListTest
 from leetcode.base.structure.ListNode import ListNode
 from leetcode.base.structure.TreeNode import TreeNode
-import os
-
 
 class CallBack(object):
     def __init__(self):
@@ -148,13 +147,14 @@ class CallBack(object):
         else:
             print("错误")
 
-    @typeassert(object, list, list, rtype=list)
-    def funcListTest(self, funcList, paramList):
+    @typeassert(object, list, list, str, rtype=list)
+    def funcListTest(self, funcList, paramList, path):
         """
 
+        :param path:
         :param funcList:   方法列表
         :param paramList:  参数列表
         :return:
         """
-        retList = funcListTest(os.getcwd(), funcList, paramList)
+        retList = funcListTest(funcList, paramList, path)
         return retList

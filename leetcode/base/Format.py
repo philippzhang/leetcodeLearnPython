@@ -9,8 +9,7 @@ from leetcode.base.structure.TreeNode import TreeNode
 def formatObj(obj):
     dataBuffer = []
     formatObjCore(obj, dataBuffer)
-    str1 = ""
-    return str1.join([str(x) for x in dataBuffer])
+    return "".join([str(x) for x in dataBuffer])
 
 
 def formatObjCore(obj, dataBuffer):

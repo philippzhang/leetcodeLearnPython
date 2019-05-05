@@ -3,6 +3,7 @@ import time
 import types
 import os
 
+from leetcode.base.Build import buildList, buildListNode, buildTreeNode
 from leetcode.base.StringUtil import judgeINumber
 
 
@@ -88,6 +89,8 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
 
     print("输入:")
     paramLength = len(paramTypes) - 1
+    if algorithmFuncName == 'funcListTest':
+        paramLength -= 1
     try:
         obj.printInput(dataList, paramLength)
     except Exception as e:
@@ -101,6 +104,9 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
         print('inputBuild(Exception):\t', str(e))
         testFlag = False
         invokeFlag = False
+
+    if algorithmFuncName == 'funcListTest':
+        inputObjArr.append(path)
 
     start_time = time.time()  # 开始时间
     try:
@@ -176,20 +182,43 @@ def funcInvoke(className, path):
     return flag
 
 
-def funcListTest(path, funcList, paramList):
+def funcListTest(funcList, paramList, path):
+    retList = []
     packageName = path.split("/")[-1]
     for i in range(len(funcList)):
         funcName = funcList[i]
         params = paramList[i]
         if i == 0:
-            #第一个值是构造方法
-            className = "leetcode." + packageName + "."+funcName+"."+funcName
+            # 第一个值是构造方法
+            className = "leetcode." + packageName + "." + funcName + "." + funcName
             al = getObject(className)
-            pass
+            retList.append(None)
         else:
-            pass
+            objFunc = getattr(al, funcName)
+            inputObjArr = []
+            code = objFunc.__code__
+            co_consts = code.co_consts[0]
+            co_consts = co_consts.strip()
+            co_arr = co_consts.split('\n')
+            for j in range(len(co_arr)):
+                co = co_arr[j].strip()
+                co_type = co.split(':')[-1].strip()
+                if co.startswith(':type'):
+                    if co_type == 'int':
+                        param = params[j]
+                        inputObjArr.append(int(param))
+                    elif co_type == 'list':
+                        param = params[j]
+                        inputObjArr.append(buildList(param))
+                    elif co_type == 'ListNode':
+                        inputObjArr.append(buildListNode(param))
+                    elif co_type == 'TreeNode':
+                        inputObjArr.append(buildTreeNode(param))
 
-    pass
+            outputObj = objFunc(*inputObjArr)
+            retList.append(outputObj)
+
+    return retList
 
 
 def _get_mod(modulePath):
@@ -279,3 +308,7 @@ def _readMdFile(path):
     if len(listNew) > 0:
         ret.append(listNew)
     return ret
+
+
+    # print globals()
+    # print module_name
