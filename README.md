@@ -39,8 +39,16 @@ funcListTest 列表式方式参数调用（第一个参数为构造方法）
 ```
 
 **方法的修饰
-由于python是解释型语言，没有很强的类型，所以算法定义必须使用 @typeassert做修饰
-例如@typeassert(object, list, int, rtype=list)
-第一个object是self,rtype是出参类型
+由于python是解释型语言，没有很强的类型，所以算法定义必须使用注释
 
+例如：
+```
+ def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+
+```
 

@@ -4,7 +4,7 @@ import types
 import os
 
 from leetcode.base.Build import buildList, buildListNode, buildTreeNode
-from leetcode.base.StringUtil import judgeINumber
+from leetcode.base.StringUtil import judgeINumber, changeStr
 
 
 def test(obj, path):
@@ -76,21 +76,42 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
     al = getObject(package)
 
     objFunc = getattr(al, algorithmFuncName)
+    code = objFunc.__code__
+    co_consts = code.co_consts[0]
+    if co_consts is None:
+        print("未定义注释!")
+        return False
+    co_consts = co_consts.strip()
+    co_arr = co_consts.split('\n')
 
     invokeFlag = True
     inputObjArr = []
     tempList = []
-    if not hasattr(objFunc, "paramTypes") or not hasattr(objFunc, "rtype"):
-        print("未使用@typeassert定义方法的参数类型!")
-        return False
-
-    paramTypes = objFunc.paramTypes
-    rtype = objFunc.rtype
+    # if not hasattr(objFunc, "paramTypes") or not hasattr(objFunc, "rtype"):
+    #     print("未使用@typeassert定义方法的参数类型!")
+    #     return False
+    #
+    # paramTypes = objFunc.paramTypes
+    # rtype = objFunc.rtype
 
     print("输入:")
-    paramLength = len(paramTypes) - 1
-    if algorithmFuncName == 'funcListTest':
-        paramLength -= 1
+    paramLength = len(co_arr) - 1
+
+    paramTypes = []
+    rtype = None
+    for j in range(len(co_arr)):
+        co = co_arr[j].strip()
+        co_type = co.split(':')[-1].strip()
+        k = co_type.find('#')
+        co_type = co_type[0:k] if k >= 0 else co_type
+        k = co_type.find('[')
+        co_type = co_type[0:k] if k >= 0 else co_type
+        co_type = co_type.strip()
+        if co.startswith(':type') or co.startswith(':param'):
+            paramTypes.append(co_type)
+        elif co.startswith(':rtype') or co.startswith(':return'):
+            rtype = co_type
+
     try:
         obj.printInput(dataList, paramLength)
     except Exception as e:
@@ -203,12 +224,18 @@ def funcListTest(funcList, paramList, path):
             for j in range(len(co_arr)):
                 co = co_arr[j].strip()
                 co_type = co.split(':')[-1].strip()
-                if co.startswith(':type'):
+                k = co_type.find('#')
+                co_type = co_type[0:k] if k >= 0 else co_type
+                k = co_type.find('[')
+                co_type = co_type[0:k] if k >= 0 else co_type
+                co_type = co_type.strip()
+                if co.startswith(':type') or co.startswith(':param'):
+                    param = params[j]
                     if co_type == 'int':
-                        param = params[j]
                         inputObjArr.append(int(param))
+                    elif co_type == 'str':
+                        inputObjArr.append(changeStr(param))
                     elif co_type == 'list':
-                        param = params[j]
                         inputObjArr.append(buildList(param))
                     elif co_type == 'ListNode':
                         inputObjArr.append(buildListNode(param))
@@ -308,7 +335,3 @@ def _readMdFile(path):
     if len(listNew) > 0:
         ret.append(listNew)
     return ret
-
-
-    # print globals()
-    # print module_name

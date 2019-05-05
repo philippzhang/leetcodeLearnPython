@@ -1,10 +1,7 @@
-
-from leetcode.base.Typeassert import typeassert
 from leetcode.base.structure.TreeNode import TreeNode
 
 
 class Solution(object):
-    @typeassert(object, TreeNode, rtype=list)
     def levelOrder(self, root):
         """
         :type root: TreeNode

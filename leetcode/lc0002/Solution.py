@@ -1,9 +1,6 @@
-from leetcode.base.Typeassert import typeassert
 from leetcode.base.structure.ListNode import ListNode
 
-
 class Solution(object):
-    @typeassert(object, ListNode, ListNode, rtype=ListNode)
     def addTwoNumbers(self, l1, l2):
         """
         :type l1: ListNode

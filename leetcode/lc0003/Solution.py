@@ -1,8 +1,4 @@
-from leetcode.base.Typeassert import typeassert
-
-
 class Solution:
-    @typeassert(object, str, rtype=int)
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str
