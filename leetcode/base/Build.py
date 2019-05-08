@@ -29,7 +29,7 @@ def buildList(data):
                 count += 1
             elif c == ']':
                 count -= 1
-            elif c == ',' or count == 0:
+            elif c == ',' and count == 0:
                 d = "".join([str(x) for x in dataBuffer])
                 d = d[0:-1]
                 arr.append(d)

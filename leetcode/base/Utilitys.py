@@ -4,6 +4,7 @@ import types
 import os
 
 from leetcode.base.Build import buildList, buildListNode, buildTreeNode
+from leetcode.base.Format import formatObj
 from leetcode.base.StringUtil import judgeINumber, changeStr
 
 
@@ -101,6 +102,8 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
     rtype = None
     for j in range(len(co_arr)):
         co = co_arr[j].strip()
+        if co.startswith('@') or co.startswith('#') or len(co) == 0:
+            continue
         co_type = co.split(':')[-1].strip()
         k = co_type.find('#')
         co_type = co_type[0:k] if k >= 0 else co_type
@@ -212,17 +215,24 @@ def funcListTest(funcList, paramList, path):
         if i == 0:
             # 第一个值是构造方法
             className = "leetcode." + packageName + "." + funcName + "." + funcName
-            al = getObject(className)
-            retList.append(None)
-        else:
-            objFunc = getattr(al, funcName)
-            inputObjArr = []
-            code = objFunc.__code__
+
+            clazz = _get_Class(className)
+            vClazz = clazz.__dict__
+            initFunc = vClazz.get("__init__")
+            code = initFunc.__code__
             co_consts = code.co_consts[0]
             co_consts = co_consts.strip()
+            if co_consts is None:
+                print("未定义注释!")
+                return False
             co_arr = co_consts.split('\n')
+
+            inputObjArr = []
+            jj = 0
             for j in range(len(co_arr)):
                 co = co_arr[j].strip()
+                if co.startswith('@') or co.startswith('#') or len(co) == 0:
+                    continue
                 co_type = co.split(':')[-1].strip()
                 k = co_type.find('#')
                 co_type = co_type[0:k] if k >= 0 else co_type
@@ -230,17 +240,56 @@ def funcListTest(funcList, paramList, path):
                 co_type = co_type[0:k] if k >= 0 else co_type
                 co_type = co_type.strip()
                 if co.startswith(':type') or co.startswith(':param'):
-                    param = params[j]
+                    param = params[jj]
                     if co_type == 'int':
                         inputObjArr.append(int(param))
                     elif co_type == 'str':
                         inputObjArr.append(changeStr(param))
                     elif co_type == 'list':
-                        inputObjArr.append(buildList(param))
+                        inputObjArr.append(buildList(formatObj(param)))
                     elif co_type == 'ListNode':
-                        inputObjArr.append(buildListNode(param))
+                        inputObjArr.append(buildListNode(formatObj(param)))
                     elif co_type == 'TreeNode':
-                        inputObjArr.append(buildTreeNode(param))
+                        inputObjArr.append(buildTreeNode(formatObj(param)))
+                jj += 1
+
+            al = clazz(*inputObjArr)
+            retList.append(None)
+        else:
+            objFunc = getattr(al, funcName)
+            inputObjArr = []
+            code = objFunc.__code__
+            co_consts = code.co_consts[0]
+            co_consts = co_consts.strip()
+            if co_consts is None:
+                print("未定义注释!")
+                return False
+            co_arr = co_consts.split('\n')
+            jj = 0
+            for j in range(len(co_arr)):
+                co = co_arr[j].strip()
+                if co.startswith('@') or co.startswith('#') or len(co) == 0:
+                    continue
+
+                co_type = co.split(':')[-1].strip()
+                k = co_type.find('#')
+                co_type = co_type[0:k] if k >= 0 else co_type
+                k = co_type.find('[')
+                co_type = co_type[0:k] if k >= 0 else co_type
+                co_type = co_type.strip()
+                if co.startswith(':type') or co.startswith(':param'):
+                    param = params[jj]
+                    if co_type == 'int':
+                        inputObjArr.append(int(param))
+                    elif co_type == 'str':
+                        inputObjArr.append(changeStr(param))
+                    elif co_type == 'list':
+                        inputObjArr.append(buildList(formatObj(param)))
+                    elif co_type == 'ListNode':
+                        inputObjArr.append(buildListNode(formatObj(param)))
+                    elif co_type == 'TreeNode':
+                        inputObjArr.append(buildTreeNode(formatObj(param)))
+                jj += 1
 
             outputObj = objFunc(*inputObjArr)
             retList.append(outputObj)

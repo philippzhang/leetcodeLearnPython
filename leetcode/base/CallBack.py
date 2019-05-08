@@ -38,6 +38,8 @@ class CallBack(object):
                 inputObjArr.append(buildList(data))
             elif item_type == 'int':
                 inputObjArr.append(int(data))
+            elif item_type == 'float':
+                inputObjArr.append(float(data))
             elif item_type == 'str':
                 inputObjArr.append(changeStr(data))
             elif item_type == 'ListNode':

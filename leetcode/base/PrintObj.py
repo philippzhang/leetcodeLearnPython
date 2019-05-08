@@ -27,8 +27,15 @@ def _printObjCore(obj, ext):
                 print("null", end='')
                 if i < len(obj) - 1:
                     print(',', end='')
-            elif tt == int:
+            elif tt == int or tt == float:
                 print(item, end='')
+                if i < len(obj) - 1:
+                    print(',', end='')
+            elif tt == bool:
+                if item:
+                    print('true', end='')
+                else:
+                    print('false', end='')
                 if i < len(obj) - 1:
                     print(',', end='')
             elif tt == str:
@@ -101,16 +108,6 @@ def printTreeNode(root):
     for i in range(ndot):
         print('.', end='')
     print("")
-
-
-
-
-
-
-
-
-
-
 
 
 def _getDepth(root):

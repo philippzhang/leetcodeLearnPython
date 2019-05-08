@@ -30,8 +30,15 @@ def formatObjCore(obj, dataBuffer):
                 dataBuffer.append("null")
                 if i < len(obj) - 1:
                     dataBuffer.append(',')
-            elif tt == int:
+            elif tt == int or tt == float:
                 dataBuffer.append(item)
+                if i < len(obj) - 1:
+                    dataBuffer.append(',')
+            elif tt == bool:
+                if item:
+                    dataBuffer.append("true")
+                else:
+                    dataBuffer.append("false")
                 if i < len(obj) - 1:
                     dataBuffer.append(',')
             elif tt == str:
