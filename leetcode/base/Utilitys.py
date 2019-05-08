@@ -80,7 +80,7 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
     code = objFunc.__code__
     co_consts = code.co_consts[0]
     if co_consts is None:
-        print("未定义注释!")
+        print(algorithmFuncName, "未定义注释!")
         return False
     co_consts = co_consts.strip()
     co_arr = co_consts.split('\n')
@@ -221,10 +221,10 @@ def funcListTest(funcList, paramList, path):
             initFunc = vClazz.get("__init__")
             code = initFunc.__code__
             co_consts = code.co_consts[0]
-            co_consts = co_consts.strip()
             if co_consts is None:
-                print("未定义注释!")
-                return False
+                print(className, ".__init__未定义注释!")
+                return className+".__init__未定义注释!"
+            co_consts = co_consts.strip()
             co_arr = co_consts.split('\n')
 
             inputObjArr = []
@@ -260,10 +260,10 @@ def funcListTest(funcList, paramList, path):
             inputObjArr = []
             code = objFunc.__code__
             co_consts = code.co_consts[0]
-            co_consts = co_consts.strip()
             if co_consts is None:
-                print("未定义注释!")
-                return False
+                retList.append(funcName + "方法未定义注释!")
+                continue
+            co_consts = co_consts.strip()
             co_arr = co_consts.split('\n')
             jj = 0
             for j in range(len(co_arr)):
