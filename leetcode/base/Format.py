@@ -42,7 +42,7 @@ def formatObjCore(obj, dataBuffer):
                 if i < len(obj) - 1:
                     dataBuffer.append(',')
             elif tt == str:
-                dataBuffer.append(item)
+                dataBuffer.append(changeStr(item))
                 if i < len(obj) - 1:
                     dataBuffer.append(',')
             elif tt == list:

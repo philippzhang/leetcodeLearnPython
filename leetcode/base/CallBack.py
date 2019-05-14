@@ -1,3 +1,4 @@
+from leetcode.base import Build
 from leetcode.base.Build import buildList, buildListNode, buildTreeNode
 from leetcode.base.Format import formatObj
 from leetcode.base.PrintObj import printObj
@@ -77,7 +78,21 @@ class CallBack(object):
                 self.printOutVerify(trueResultList, None, True)
                 return True
             try:
-                resultFlag = trueResult == testResult
+                if outputObj is not None and type(outputObj) == list:
+                    disOrder = False
+                    j = len(inputObjArr)
+                    while j < len(dataList):
+                        if dataList[j] == "$disorder":  # List 无序标志
+                            disOrder = True
+                            break
+                        j += 1
+                    if disOrder:
+                        testResultsList = Build.buildList(testResult)
+                        resultFlag = sorted(outputObj) == sorted(testResultsList)
+                    else:
+                        resultFlag = trueResult == testResult
+                else:
+                    resultFlag = trueResult == testResult
                 if resultFlag:
                     self.printOutVerify(trueResultList, testResult, resultFlag)
                     return True
