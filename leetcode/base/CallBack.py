@@ -87,8 +87,8 @@ class CallBack(object):
                             break
                         j += 1
                     if disOrder:
-                        testResultsList = Build.buildList(testResult)
-                        resultFlag = sorted(outputObj) == sorted(testResultsList)
+                        trueResultsList = Build.buildList(trueResult)
+                        resultFlag = sorted(outputObj) == sorted(trueResultsList)
                     else:
                         resultFlag = trueResult == testResult
                 else:
