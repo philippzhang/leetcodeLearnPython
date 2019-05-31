@@ -1,0 +1,2 @@
+class NoImplException(Exception):
+    pass

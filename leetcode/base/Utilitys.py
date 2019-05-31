@@ -5,6 +5,7 @@ import os
 
 from leetcode.base.Build import buildList, buildListNode, buildTreeNode
 from leetcode.base.Format import formatObj
+from leetcode.base.NoImplException import NoImplException
 from leetcode.base.StringUtil import judgeINumber, changeStr
 
 
@@ -21,7 +22,8 @@ def test(obj, path):
     if len(classList) <= 1:
         print("未定义算法主类和方法!")
         print("-----------------------------")
-        return False
+        raise NoImplException()
+        #return False
     for i in range(1, len(classList)):
         funcStr = classList[i]
         if len(funcStr) == 0:
