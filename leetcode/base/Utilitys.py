@@ -22,7 +22,7 @@ def test(obj, path):
     if len(classList) <= 1:
         print("未定义算法主类和方法!")
         print("-----------------------------")
-        raise NoImplException()
+        raise NoImplException("未定义算法主类和方法!")
         #return False
     for i in range(1, len(classList)):
         funcStr = classList[i]

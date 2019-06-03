@@ -68,6 +68,8 @@ def formatObjCore(obj, dataBuffer):
         dataBuffer.append("[")
         dataBuffer.append(_levelOrderFormat(obj))
         dataBuffer.append("]")
+    else:
+        raise ValueError('未定义的类型，转换失败!')
 
 
 def _levelOrderFormat(root):

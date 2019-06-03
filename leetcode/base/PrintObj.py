@@ -67,6 +67,8 @@ def _printObjCore(obj, ext):
         print("")
     elif t == TreeNode:
         printTreeNode(obj)
+    else:
+        raise ValueError('未定义的类型，打印失败!')
 
 
 def printTreeNode(root):

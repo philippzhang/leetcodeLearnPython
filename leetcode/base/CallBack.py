@@ -41,12 +41,16 @@ class CallBack(object):
                 inputObjArr.append(int(data))
             elif item_type == 'float':
                 inputObjArr.append(float(data))
+            elif item_type == 'bool':
+                inputObjArr.append(bool(data))
             elif item_type == 'str':
                 inputObjArr.append(changeStr(data))
             elif item_type == 'ListNode':
                 inputObjArr.append(buildListNode(data))
             elif item_type == 'TreeNode':
                 inputObjArr.append(buildTreeNode(data))
+            else:
+                raise ValueError('未定义的类型，构建失败!')
             i += 1
 
     def printOutput(self, outputObj):
