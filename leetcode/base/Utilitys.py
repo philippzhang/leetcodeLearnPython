@@ -163,7 +163,7 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
                 # 验证输入参数
 
                 inputIndex = int(trueResult[1:2])
-                trueInputResult = trueResult[3:-1]
+                trueInputResult = trueResult[3:-1].strip()
                 if len(trueInputResult) > 0 and 0 <= inputIndex < len(inputObjArr):
                     try:
                         resultFlag = obj.inputVerify(inputObjArr, trueInputResult, outputObj, inputIndex, tempList)

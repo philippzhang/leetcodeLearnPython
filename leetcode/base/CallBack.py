@@ -77,7 +77,7 @@ class CallBack(object):
         testResult = formatObj(outputObj)
 
         for i in range(len(trueResultList)):
-            trueResult = trueResultList[i]
+            trueResult = trueResultList[i].strip()
             if trueResult == "null" and outputObj is None:
                 self.printOutVerify(trueResultList, None, True)
                 return True
