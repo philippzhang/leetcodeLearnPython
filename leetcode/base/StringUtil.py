@@ -20,3 +20,7 @@ def changeStr(temp):
         temp = temp[0:-1]
 
     return temp
+
+
+def isEqual(a, b):
+    return abs(a - b) < 0.000001

@@ -1,4 +1,4 @@
-from leetcode.base import Build
+from leetcode.base import Build, StringUtil
 from leetcode.base.Build import buildList, buildListNode, buildTreeNode
 from leetcode.base.Format import formatObj
 from leetcode.base.PrintObj import printObj
@@ -77,6 +77,7 @@ class CallBack(object):
         testResult = formatObj(outputObj)
 
         for i in range(len(trueResultList)):
+            # 答案
             trueResult = trueResultList[i].strip()
             if trueResult == "null" and outputObj is None:
                 self.printOutVerify(trueResultList, None, True)
@@ -95,6 +96,10 @@ class CallBack(object):
                         resultFlag = sorted(outputObj) == sorted(trueResultsList)
                     else:
                         resultFlag = trueResult == testResult
+                elif outputObj is not None and type(outputObj) == float:
+                    testResultFloat = outputObj
+                    trueResultFloat = float(trueResult)
+                    resultFlag = StringUtil.isEqual(testResultFloat, trueResultFloat)
                 else:
                     resultFlag = trueResult == testResult
                 if resultFlag:
