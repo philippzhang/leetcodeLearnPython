@@ -2,6 +2,7 @@ from queue import Queue
 
 from leetcode.base.Stack import Stack
 from leetcode.base.StringUtil import changeStr
+from leetcode.base.StringUtil import sortJson
 from leetcode.base.structure.ListNode import ListNode
 from leetcode.base.structure.Node import Node
 from leetcode.base.structure.TreeNode import TreeNode
@@ -126,7 +127,7 @@ def _levelOrderTreeNodeFormat(root):
 def _levelOrderNodeFormat(root):
     jsonObject = _node2JsonObject(root)
     _nodeAddId(jsonObject)
-    _sortJson(jsonObject)
+    sortJson(jsonObject)
     return json.dumps(jsonObject, separators=(',', ':'))
 
 
@@ -157,18 +158,4 @@ def _nodeAddId(root):
                         q.put(child)
 
 
-def _sortJson(jsonNode):
-    if jsonNode is None:
-        return
-    elif isinstance(jsonNode, list):
-        for item in jsonNode:
-            _sortJson(item)
-    elif isinstance(jsonNode, dict):
-        newJsonNode = sorted(jsonNode)
-        for key in newJsonNode:
-            v = jsonNode[key]
-            del jsonNode[key]
-            _sortJson(v)
-            jsonNode[key] = v
-    else:
-        return
+

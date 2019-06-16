@@ -143,12 +143,21 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
         testFlag = False
     end_time = time.time()  # 结束时间
     if rtype is not None:
+        enprint = True
+        j = len(inputObjArr)
+        while j < len(dataList):
+            if dataList[j] == "$disprint":  # 不打印输出
+                enprint = False
+                break
+            j += 1
+
         # 打印输出
-        try:
-            obj.printOutput(outputObj)
-        except Exception as e:
-            print('printOutput(Exception):\t', str(e))
-            testFlag = False
+        if enprint:
+            try:
+                obj.printOutput(outputObj)
+            except Exception as e:
+                print('printOutput(Exception):\t', str(e))
+                testFlag = False
 
     trueResultOutputList = []
     for k in range(paramLength, len(dataList)):
@@ -166,7 +175,7 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
                 trueInputResult = trueResult[3:-1].strip()
                 if len(trueInputResult) > 0 and 0 <= inputIndex < len(inputObjArr):
                     try:
-                        resultFlag = obj.inputVerify(inputObjArr, trueInputResult, outputObj, inputIndex, tempList)
+                        resultFlag = obj.inputVerify(inputObjArr, trueInputResult, outputObj, inputIndex, dataList, tempList)
                         if not resultFlag:
                             testFlag = False
                     except Exception as e:

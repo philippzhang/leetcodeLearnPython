@@ -1,4 +1,4 @@
-from leetcode.base import Build, StringUtil
+from leetcode.base import Build, StringUtil, PrintObj
 from leetcode.base.Build import buildList, buildListNode, buildTreeNode, buildMultiTree
 from leetcode.base.Format import formatObj
 from leetcode.base.PrintObj import printObj
@@ -135,19 +135,37 @@ class CallBack(object):
         else:
             print("错误")
 
-    def inputVerify(self, inputObjArr, trueInputResult, outputObj, inputIndex, tempList):
+    def inputVerify(self, inputObjArr, trueInputResult, outputObj, inputIndex, dataList, tempList):
         """
         输入参数验证方法
         :param inputObjArr:      #调用算法的参数值列表
         :param trueInputResult:  #正确输入结果
         :param outputObj:        #算法输出值
         :param inputIndex:       #需要验证的入参参数序号
+        :param dataList:         #读入数据列表
         :param tempList:         #临时缓存，用于数据传递
         :return:
         """
         try:
             inputObj = inputObjArr[inputIndex]
-            testInputResult = formatObj(inputObj);
+
+            enprint = False
+            j = len(inputObjArr)
+            while j < len(dataList):
+                if dataList[j] == "$enprint":  # 打印输入
+                    enprint = True
+                    break
+                j += 1
+
+            if enprint:
+                try:
+                    print("格式输入:")
+                    PrintObj.printObj(inputObj)
+                except Exception as e:
+                    print('inputVerify(Exception):\t', str(e))
+                    return False
+
+            testInputResult = formatObj(inputObj)
             resultFlag = trueInputResult == testInputResult
             self.printInputVerify(trueInputResult, testInputResult, resultFlag)
             return resultFlag;
