@@ -179,7 +179,7 @@ def _printMultiNode(root):
 
 
 def _getMultiDepth(root):
-    if root is not None:
+    if root is None:
         return 0
     if not root.children:
         return 1
