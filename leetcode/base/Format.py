@@ -6,7 +6,6 @@ from leetcode.base.structure.ListNode import ListNode
 from leetcode.base.structure.Node import Node
 from leetcode.base.structure.TreeNode import TreeNode
 import json
-import hashlib
 
 
 def formatObj(obj):
@@ -52,6 +51,12 @@ def formatObjCore(obj, dataBuffer):
                 formatObjCore(item, dataBuffer)
                 if i < len(obj) - 1:
                     dataBuffer.append(',')
+            elif tt == TreeNode:
+                formatObjCore(item, dataBuffer)
+            elif tt == Node:
+                formatObjCore(item, dataBuffer)
+            elif tt is not None:
+                raise ValueError('未定义的List泛型，转换失败!')
 
         dataBuffer.append("]")
 

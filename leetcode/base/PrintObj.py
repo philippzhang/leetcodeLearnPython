@@ -50,6 +50,19 @@ def _printObjCore(obj, ext):
                     _printObjCore(item, ",")
                 else:
                     _printObjCore(item, None)
+            elif tt == TreeNode:
+                if i == 0:
+                    print()
+                _printObjCore(item, None)
+                print()
+            elif tt == Node:
+                if i == 0:
+                    print()
+                _printObjCore(item, None)
+                print()
+            elif tt is not None:
+                raise ValueError('未定义的List泛型，打印失败!')
+
         print("]", end='')
         if ext is not None:
             print(ext, end='')
