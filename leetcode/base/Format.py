@@ -3,7 +3,10 @@ from queue import Queue
 from leetcode.base.Stack import Stack
 from leetcode.base.StringUtil import changeStr
 from leetcode.base.structure.ListNode import ListNode
+from leetcode.base.structure.Node import Node
 from leetcode.base.structure.TreeNode import TreeNode
+import json
+import hashlib
 
 
 def formatObj(obj):
@@ -66,13 +69,18 @@ def formatObjCore(obj, dataBuffer):
             dataBuffer.append("null")
             return
         dataBuffer.append("[")
-        dataBuffer.append(_levelOrderFormat(obj))
+        dataBuffer.append(_levelOrderTreeNodeFormat(obj))
         dataBuffer.append("]")
+    elif t == Node:
+        if t is None:
+            dataBuffer.append("null")
+            return
+        dataBuffer.append(_levelOrderNodeFormat(obj))
     else:
         raise ValueError('未定义的类型，转换失败!')
 
 
-def _levelOrderFormat(root):
+def _levelOrderTreeNodeFormat(root):
     current = root
     stringBuffer = []
     if current is not None:
@@ -108,3 +116,54 @@ def _levelOrderFormat(root):
     if len(s) > 0:
         s = s[0:-1]
     return s
+
+
+def _levelOrderNodeFormat(root):
+    jsonObject = _node2JsonObject(root)
+    _nodeAddId(jsonObject)
+    _sortJson(jsonObject)
+    return json.dumps(jsonObject, separators=(',', ':'))
+
+
+def _node2JsonObject(node):
+    jsonObject = {}
+    children = []
+    if node.children is not None:
+        for child in node.children:
+            if child is not None:
+                children.append(_node2JsonObject(child))
+    jsonObject["children"] = children
+    jsonObject["val"] = node.val
+    return jsonObject
+
+
+def _nodeAddId(root):
+    if root is not None:
+        q = Queue()
+        q.put(root)
+        index = 1
+        while not q.empty():
+            current = q.get()
+            if current is not None:
+                current["$id"] = str(index)
+                index = index + 1
+                if current["children"] is not None:
+                    for child in current["children"]:
+                        q.put(child)
+
+
+def _sortJson(jsonNode):
+    if jsonNode is None:
+        return
+    elif isinstance(jsonNode, list):
+        for item in jsonNode:
+            _sortJson(item)
+    elif isinstance(jsonNode, dict):
+        newJsonNode = sorted(jsonNode)
+        for key in newJsonNode:
+            v = jsonNode[key]
+            del jsonNode[key]
+            _sortJson(v)
+            jsonNode[key] = v
+    else:
+        return

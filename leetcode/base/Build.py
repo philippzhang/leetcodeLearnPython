@@ -2,7 +2,9 @@ from queue import Queue
 
 from leetcode.base.StringUtil import changeStr, judgeNumber
 from leetcode.base.structure.ListNode import ListNode
+from leetcode.base.structure.Node import Node
 from leetcode.base.structure.TreeNode import TreeNode
+import json
 
 
 def buildList(data):
@@ -78,7 +80,7 @@ def buildListNode(data):
 
 def buildTreeNode(data):
     """
-    构建树
+    构建二叉树
     :param data:
     :return:
     """
@@ -97,8 +99,30 @@ def buildTreeNode(data):
         if i < len(arr) and arr[i] is not None and arr[i] != 'null':
             node.left = TreeNode(int(arr[i]))
             q.put(node.left)
-        if i+1 < len(arr) and arr[i+1] is not None and arr[i+1] != 'null':
-            node.right = TreeNode(int(arr[i+1]))
+        if i + 1 < len(arr) and arr[i + 1] is not None and arr[i + 1] != 'null':
+            node.right = TreeNode(int(arr[i + 1]))
             q.put(node.right)
         i += 2
+    return root
+
+
+def buildMultiTree(data):
+    """
+    构建N叉树
+    :param data:
+    :return:
+    """
+    if data is None or len(data) == 0 or data == "null" or data.find("{") < 0:
+        return None
+    if data == '{}':
+        return None
+    jsonObject = json.loads(data)
+    val = jsonObject["val"]
+    root = Node(val, None)
+    childJsonJsonArray = jsonObject["children"]
+    children = []
+    for childJsonObject in childJsonJsonArray:
+        temp = buildMultiTree(json.dumps(childJsonObject));
+        children.append(temp)
+    root.children = children
     return root

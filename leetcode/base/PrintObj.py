@@ -2,6 +2,7 @@ import math
 
 from leetcode.base.Stack import Stack
 from leetcode.base.structure.ListNode import ListNode
+from leetcode.base.structure.Node import Node
 from leetcode.base.structure.TreeNode import TreeNode
 
 
@@ -66,12 +67,14 @@ def _printObjCore(obj, ext):
             print(ext, end='')
         print("")
     elif t == TreeNode:
-        printTreeNode(obj)
+        _printTreeNode(obj)
+    elif t == Node:
+        _printMultiNode(obj)
     else:
         raise ValueError('未定义的类型，打印失败!')
 
 
-def printTreeNode(root):
+def _printTreeNode(root):
     if root is None:
         return
     globalStack = Stack()
@@ -118,3 +121,54 @@ def _getDepth(root):
         rDepth = _getDepth(root.right);
         return (lDepth if lDepth > rDepth else rDepth) + 1
     return 0
+
+
+def _printMultiNode(root):
+    if root is None:
+        return
+    globalStack = Stack()
+    globalStack.push(root)
+    depth = _getMultiDepth(root)
+    nBlank = int(math.pow(2, depth + 1))
+    ndot = nBlank * 2
+    isRowEmpty = False
+    for i in range(ndot):
+        print('.', end='')
+    print("")
+    while not isRowEmpty:
+        localStack = Stack()
+        isRowEmpty = True
+        for i in range(nBlank):
+            print(' ', end='')
+        while not globalStack.isEmpty():
+            temp = globalStack.pop()
+            if temp is not None:
+                print(temp.val, end='')
+                print(' ', end='')
+                if temp.children is not None:
+                    for child in temp.children:
+                        localStack.push(child)
+                        isRowEmpty = False
+
+            else:
+                print('# ', end='')
+                localStack.push(None)
+                localStack.push(None)
+            for i in range(nBlank * 2 - 2):
+                print(' ', end='')
+        print("")
+        nBlank //= 2
+        while not localStack.isEmpty():
+            globalStack.push(localStack.pop())
+    for i in range(ndot):
+        print('.', end='')
+    print("")
+
+
+def _getMultiDepth(root):
+    if root is not None:
+        return 0
+    if not root.children:
+        return 1
+    return max(_getMultiDepth(child) + 1 for child in root.children)
+

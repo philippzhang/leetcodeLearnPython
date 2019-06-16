@@ -1,5 +1,5 @@
 from leetcode.base import Build, StringUtil
-from leetcode.base.Build import buildList, buildListNode, buildTreeNode
+from leetcode.base.Build import buildList, buildListNode, buildTreeNode, buildMultiTree
 from leetcode.base.Format import formatObj
 from leetcode.base.PrintObj import printObj
 from leetcode.base.StringUtil import changeStr
@@ -49,6 +49,8 @@ class CallBack(object):
                 inputObjArr.append(buildListNode(data))
             elif item_type == 'TreeNode':
                 inputObjArr.append(buildTreeNode(data))
+            elif item_type == 'Node':
+                inputObjArr.append(buildMultiTree(data))
             else:
                 raise ValueError('未定义的类型，构建失败!')
             i += 1
