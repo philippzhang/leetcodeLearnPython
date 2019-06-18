@@ -87,6 +87,21 @@ def _printObjCore(obj, ext):
         raise ValueError('未定义的类型，打印失败!')
 
 
+def judgePrint(obj):
+    if obj is None:
+        return False
+    t = type(obj)
+    if t == ListNode or t ==TreeNode or t == Node:
+        return True
+    elif t == list:
+        for i in range(len(obj)):
+            item = obj[i]
+            tt = type(item)
+            if tt == list or tt == ListNode or tt == TreeNode or tt == Node:
+                return True
+    return False
+
+
 def _printTreeNode(root):
     if root is None:
         return

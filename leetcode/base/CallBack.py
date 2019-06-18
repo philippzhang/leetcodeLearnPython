@@ -61,8 +61,17 @@ class CallBack(object):
         :param outputObj: #算法输出值
         :return:
         """
-        print("格式输出:")
+        print("格式化输出参数:")
         printObj(outputObj)
+
+    def printInputChg(self, inputObj):
+        """
+        打印输入参数方法
+        :param inputObj: #算法输入值
+        :return:
+        """
+        print("格式化输入参数:")
+        printObj(inputObj)
 
     def outputVerify(self, inputObjArr, trueResultList, outputObj, dataList, tempList):
         """
@@ -148,23 +157,6 @@ class CallBack(object):
         """
         try:
             inputObj = inputObjArr[inputIndex]
-
-            enprint = False
-            j = len(inputObjArr)
-            while j < len(dataList):
-                if dataList[j] == "$enprint":  # 打印输入
-                    enprint = True
-                    break
-                j += 1
-
-            if enprint:
-                try:
-                    print("格式输入:")
-                    PrintObj.printObj(inputObj)
-                except Exception as e:
-                    print('inputVerify(Exception):\t', str(e))
-                    return False
-
             testInputResult = formatObj(inputObj)
             resultFlag = trueInputResult == testInputResult
             self.printInputVerify(trueInputResult, testInputResult, resultFlag)

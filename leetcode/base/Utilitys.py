@@ -3,6 +3,7 @@ import time
 import types
 import os
 
+from leetcode.base import PrintObj
 from leetcode.base.Build import buildList, buildListNode, buildTreeNode
 from leetcode.base.Format import formatObj
 from leetcode.base.NoImplException import NoImplException
@@ -152,7 +153,7 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
             j += 1
 
         # 打印输出
-        if enprint:
+        if enprint and PrintObj.judgePrint(outputObj):
             try:
                 obj.printOutput(outputObj)
             except Exception as e:
@@ -175,6 +176,23 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
                 trueInputResult = trueResult[3:-1].strip()
                 if len(trueInputResult) > 0 and 0 <= inputIndex < len(inputObjArr):
                     try:
+
+                        enprint = True
+                        j = len(inputObjArr)
+                        while j < len(dataList):
+                            if dataList[j] == "$disprint":  # 不打印输出
+                                enprint = False
+                                break
+                            j += 1
+                        inputObj = inputObjArr[inputIndex]
+                        # 打印输入
+                        if enprint and PrintObj.judgePrint(inputObj):
+                            try:
+                                obj.printInputChg(inputObj)
+                            except Exception as e:
+                                print('printInputChg(Exception):\t', str(e))
+                                testFlag = False
+
                         resultFlag = obj.inputVerify(inputObjArr, trueInputResult, outputObj, inputIndex, dataList, tempList)
                         if not resultFlag:
                             testFlag = False
