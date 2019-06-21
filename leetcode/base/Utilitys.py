@@ -58,12 +58,12 @@ def test(obj, path):
             dataList = testList[j]
             if len(dataList) > 0:
                 print("第{}组数据:".format(jCount))
-                resultFlag = testObj(obj, path, algorithmClassName, algorithmFuncName, dataList)
-                if not resultFlag:
-                    testFlag = False
+            resultFlag = testObj(obj, path, algorithmClassName, algorithmFuncName, dataList)
+            if not resultFlag:
+                testFlag = False
 
-                print("-----------------------------")
-                jCount += 1
+            print("-----------------------------")
+            jCount += 1
 
     if not testFlag:
         print("存在错误!")
@@ -98,7 +98,7 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
     # paramTypes = objFunc.paramTypes
     # rtype = objFunc.rtype
 
-    print("输入:")
+
     paramLength = len(co_arr) - 1
 
     paramTypes = []
@@ -118,12 +118,14 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
         elif co.startswith(':rtype') or co.startswith(':return'):
             rtype = co_type
 
-    try:
-        obj.printInput(dataList, paramLength)
-    except Exception as e:
-        print('printInput(Exception):\t', str(e))
-        testFlag = False
-        invokeFlag = False
+    if paramLength>0:
+        print("输入:")
+        try:
+            obj.printInput(dataList, paramLength)
+        except Exception as e:
+            print('printInput(Exception):\t', str(e))
+            testFlag = False
+            invokeFlag = False
 
     try:
         obj.inputBuild(paramTypes, inputObjArr, dataList, tempList)
