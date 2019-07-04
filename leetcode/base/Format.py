@@ -12,6 +12,8 @@ import json
 def formatObj(obj):
     dataBuffer = []
     formatObjCore(obj, dataBuffer)
+    if len(dataBuffer) > 0 and dataBuffer[-1] == ',':
+        dataBuffer.pop()
     return "".join([str(x) for x in dataBuffer])
 
 
@@ -156,6 +158,3 @@ def _nodeAddId(root):
                 if current["children"] is not None:
                     for child in current["children"]:
                         q.put(child)
-
-
-

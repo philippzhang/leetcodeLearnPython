@@ -24,7 +24,7 @@ def test(obj, path):
         print("未定义算法主类和方法!")
         print("-----------------------------")
         raise NoImplException("未定义算法主类和方法!")
-        #return False
+        # return False
     for i in range(1, len(classList)):
         funcStr = classList[i]
         if len(funcStr) == 0:
@@ -98,7 +98,6 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
     # paramTypes = objFunc.paramTypes
     # rtype = objFunc.rtype
 
-
     paramLength = len(co_arr) - 1
 
     paramTypes = []
@@ -118,7 +117,7 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
         elif co.startswith(':rtype') or co.startswith(':return'):
             rtype = co_type
 
-    if paramLength>0:
+    if paramLength > 0:
         print("输入:")
         try:
             obj.printInput(dataList, paramLength)
@@ -145,6 +144,16 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
         print('invoke(Exception):\t', str(e))
         testFlag = False
     end_time = time.time()  # 结束时间
+
+    trueResultOutputList = []
+    for k in range(paramLength, len(dataList)):
+        trueResult = dataList[k]
+        if len(trueResult) > 0:
+            if trueResult.startswith("="):
+                trueResult = trueResult[1:]
+                if len(trueResult):
+                    trueResultOutputList.append(trueResult)
+
     if rtype is not None:
         enprint = True
         j = len(inputObjArr)
@@ -155,22 +164,17 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
             j += 1
 
         # 打印输出
-        if enprint and PrintObj.judgePrint(outputObj):
+        if enprint and (PrintObj.judgePrint(outputObj) or len(trueResultOutputList) == 0 ):
             try:
                 obj.printOutput(outputObj)
             except Exception as e:
                 print('printOutput(Exception):\t', str(e))
                 testFlag = False
 
-    trueResultOutputList = []
     for k in range(paramLength, len(dataList)):
         trueResult = dataList[k]
         if len(trueResult) > 0:
-            if trueResult.startswith("="):
-                trueResult = trueResult[1:]
-                if len(trueResult):
-                    trueResultOutputList.append(trueResult)
-            elif judgeINumber(trueResult):
+            if judgeINumber(trueResult):
 
                 # 验证输入参数
 
@@ -195,7 +199,8 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
                                 print('printInputChg(Exception):\t', str(e))
                                 testFlag = False
 
-                        resultFlag = obj.inputVerify(inputObjArr, trueInputResult, outputObj, inputIndex, dataList, tempList)
+                        resultFlag = obj.inputVerify(inputObjArr, trueInputResult, outputObj, inputIndex, dataList,
+                                                     tempList)
                         if not resultFlag:
                             testFlag = False
                     except Exception as e:
@@ -254,7 +259,7 @@ def funcListTest(funcList, paramList, path):
             co_consts = code.co_consts[0]
             if co_consts is None:
                 print(className, ".__init__未定义注释!")
-                return className+".__init__未定义注释!"
+                return className + ".__init__未定义注释!"
             co_consts = co_consts.strip()
             co_arr = co_consts.split('\n')
 
