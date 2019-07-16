@@ -96,11 +96,11 @@ def buildTreeNode(data):
     i = 1
     while not q.empty() and i < len(arr):
         node = q.get()
-        if i < len(arr) and arr[i] is not None and arr[i] != 'null':
-            node.left = TreeNode(int(arr[i]))
+        if i < len(arr) and arr[i] is not None and arr[i].strip() != 'null':
+            node.left = TreeNode(int(arr[i].strip()))
             q.put(node.left)
-        if i + 1 < len(arr) and arr[i + 1] is not None and arr[i + 1] != 'null':
-            node.right = TreeNode(int(arr[i + 1]))
+        if i + 1 < len(arr) and arr[i + 1] is not None and arr[i + 1].strip() != 'null':
+            node.right = TreeNode(int(arr[i + 1].strip()))
             q.put(node.right)
         i += 2
     return root
@@ -122,7 +122,7 @@ def buildMultiTree(data):
     childJsonJsonArray = jsonObject["children"]
     children = []
     for childJsonObject in childJsonJsonArray:
-        temp = buildMultiTree(json.dumps(childJsonObject));
+        temp = buildMultiTree(json.dumps(childJsonObject))
         children.append(temp)
     root.children = children
     return root
