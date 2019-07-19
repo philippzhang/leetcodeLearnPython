@@ -4,7 +4,7 @@ from leetcode.base.Stack import Stack
 from leetcode.base.structure.ListNode import ListNode
 from leetcode.base.structure.Node import Node
 from leetcode.base.structure.TreeNode import TreeNode
-
+import json
 
 def printObj(obj):
     _printObjCore(obj, None)
@@ -83,6 +83,9 @@ def _printObjCore(obj, ext):
         _printTreeNode(obj)
     elif t == Node:
         _printMultiNode(obj)
+    elif t == dict:
+        j = json.dumps(obj, separators=(',', ':'))
+        print(j)
     else:
         raise ValueError('未定义的类型，打印失败!')
 
@@ -199,4 +202,3 @@ def _getMultiDepth(root):
     if not root.children:
         return 1
     return max(_getMultiDepth(child) + 1 for child in root.children)
-
