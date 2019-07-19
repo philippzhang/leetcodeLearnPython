@@ -6,6 +6,7 @@ from leetcode.base.structure.Node import Node
 from leetcode.base.structure.TreeNode import TreeNode
 import json
 
+
 def printObj(obj):
     _printObjCore(obj, None)
 
