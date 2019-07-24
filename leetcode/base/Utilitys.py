@@ -8,6 +8,7 @@ from leetcode.base.Build import buildList, buildListNode, buildTreeNode
 from leetcode.base.Format import formatObj
 from leetcode.base.NoImplException import NoImplException
 from leetcode.base.StringUtil import judgeINumber, changeStr
+from leetcode.base.structure.Iterator import Iterator
 
 
 def test(obj, path):
@@ -105,6 +106,8 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
     for j in range(len(co_arr)):
         co = co_arr[j].strip()
         if co.startswith('@') or co.startswith('#') or len(co) == 0:
+            continue
+        if not co.startswith(":"):
             continue
         co_type = co.split(':')[-1].strip()
         k = co_type.find('#')
@@ -269,6 +272,8 @@ def funcListTest(funcList, paramList, path):
                 co = co_arr[j].strip()
                 if co.startswith('@') or co.startswith('#') or len(co) == 0:
                     continue
+                if not co.startswith(":"):
+                    continue
                 co_type = co.split(':')[-1].strip()
                 k = co_type.find('#')
                 co_type = co_type[0:k] if k >= 0 else co_type
@@ -287,6 +292,10 @@ def funcListTest(funcList, paramList, path):
                         inputObjArr.append(buildListNode(formatObj(param)))
                     elif co_type == 'TreeNode':
                         inputObjArr.append(buildTreeNode(formatObj(param)))
+                    elif co_type == 'Iterator':
+                        vv = Iterator(buildList(formatObj(param)))
+                        inputObjArr.append(vv)
+
                 jj += 1
 
             al = clazz(*inputObjArr)
@@ -306,7 +315,8 @@ def funcListTest(funcList, paramList, path):
                 co = co_arr[j].strip()
                 if co.startswith('@') or co.startswith('#') or len(co) == 0:
                     continue
-
+                if not co.startswith(":"):
+                    continue
                 co_type = co.split(':')[-1].strip()
                 k = co_type.find('#')
                 co_type = co_type[0:k] if k >= 0 else co_type
@@ -325,10 +335,13 @@ def funcListTest(funcList, paramList, path):
                         inputObjArr.append(buildListNode(formatObj(param)))
                     elif co_type == 'TreeNode':
                         inputObjArr.append(buildTreeNode(formatObj(param)))
+                    else:
+                        raise ValueError('未定义的参数类型，初始化失败!')
                 jj += 1
 
             outputObj = objFunc(*inputObjArr)
             retList.append(outputObj)
+
 
     return retList
 
