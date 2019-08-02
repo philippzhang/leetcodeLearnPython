@@ -206,6 +206,11 @@ def testObj(obj, path, algorithmClassName, algorithmFuncName, dataList):
                                                      tempList)
                         if not resultFlag:
                             testFlag = False
+                        else:
+                            #支持多个答案
+                            testFlag = True
+                            break
+
                     except Exception as e:
                         print('inputVerify(Exception):\t', str(e))
                         testFlag = False
